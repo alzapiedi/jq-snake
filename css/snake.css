@@ -1,0 +1,75 @@
+html, h1, h2, body, head, figure, ul, li, div {
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  background: transparent;
+  font: inherit;
+  text-align: inherit;
+  text-decoration: inherit;
+
+}
+
+h1 {
+  text-align: center;
+  font-size: 36px;
+  padding: 20px;
+}
+
+button {
+  font-size: 14px;
+  width: 150px;
+  margin: auto;
+  left: 43%;
+  top: 50px;
+  display: none;
+  position: absolute;
+}
+h1 > div {
+  display: inline;
+}
+
+li {
+  height: 20px;
+  width: 20px;
+  display: block;
+  float: left;
+}
+
+ul {
+  border: 1px solid black;
+  width: 500px;
+  margin: auto;
+  list-style: none;
+}
+
+h2 {
+  text-align: center;
+  font-size: 48px;
+  margin-top: -300px;
+  display: none;
+  position: relative;
+}
+
+
+.group:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.has-snake1 {
+  background: blue;
+}
+
+.has-snake2 {
+  background: green;
+}
+
+.apple {
+  background: red;
+}
+
+.game-over {
+  display: block;
+}
