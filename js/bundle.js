@@ -120,7 +120,6 @@
 	    this.grid.push(new Array(25));
 	  }
 	  this.snake1 = new Snake();
-	  this.snake2 = new Snake();
 	  this.apple = this.setApple();
 	};
 	Board.prototype.setApple = function () {
@@ -135,7 +134,7 @@
 	};
 	
 	Board.prototype.occupied = function (pos) {
-	  segments = this.snake1.segments.concat(this.snake2.segments);
+	  segments = this.snake1.segments;
 	  for (var i = 0; i < segments.length; i++) {
 	    if (this.snake1.equal(pos, segments[i])) {
 	      return true;
@@ -150,17 +149,11 @@
 	    this.snake1.score += 10;
 	    this.apple = this.setApple();
 	  }
-	  if (this.snake2.equal(this.snake2.head, this.apple)) {
-	    this.snake2.segments.push(this.snake2.lastPosition);
-	    this.snake2.score += 10;
-	    this.apple = this.setApple();
-	  }
 	};
 	
 	Board.prototype.checkSnake = function () {
-	  var segments = this.snake1.segments.concat(this.snake2.segments);
+	  var segments = this.snake1.segments;
 	  var head1 = this.snake1.head;
-	  var head2 = this.snake2.head;
 	  var collide = true;
 	  for (var i = 0; i < segments.length; i++) {
 	    for (var j = i + 1; j < segments.length; j++) {
@@ -169,7 +162,7 @@
 	      }
 	    }
 	  }
-	  var bounds = (head1[0] >= 0 && head1[0] < 25 && head1[1] >= 0 && head1[1] < 25 && head2[0] >= 0 && head2[0] < 25 && head2[1] >= 0 && head2[1] < 25);
+	  var bounds = (head1[0] >= 0 && head1[0] < 25 && head1[1] >= 0 && head1[1] < 25);
 	  return collide && bounds;
 	};
 	
@@ -194,7 +187,6 @@
 	
 	    if (this.board.checkSnake()) {
 	      this.board.snake1.move();
-	      this.board.snake2.move();
 	      this.board.checkApple();
 	      this.render();
 	    }
@@ -208,38 +200,19 @@
 	
 	View.prototype.bindEvents = function () {
 	  snake1 = this.board.snake1;
-	  snake2 = this.board.snake2;
 	  key('left', function () {
 	    snake1.turn("W");
 	  });
 	      key('right', function () {
 	        snake1.turn("E");
-	
 	      });
 	      key('up', function () {
 	        snake1.turn("N");
-	
 	      });
 	      key('down', function () {
-	
 	        snake1.turn("S");
 	      });
 	
-	      key('a', function () {
-	        snake2.turn("W");
-	      });
-	          key('d', function () {
-	            snake2.turn("E");
-	
-	          });
-	          key('w', function () {
-	            snake2.turn("N");
-	
-	          });
-	          key('s', function () {
-	
-	            snake2.turn("S");
-	          });
 	      var resetGame = function (e) {
 	        $('h2').removeClass();
 	        $('button').removeClass();
@@ -271,25 +244,17 @@
 	View.prototype.render = function () {
 	  var board = this.board;
 	  var snake1 = board.snake1;
-	  var snake2 = board.snake2;
+	
 	  var positions1 = snake1.segments;
-	  var positions2 = snake2.segments;
+	
 	  $('.score1').html(snake1.score);
-	  $('.score2').html(snake2.score);
+	
 	  $('li').each(function (i, el) {
 	    $(el).removeClass().addClass('open');
 	    pos = $(el).data("pos");
 	    for(var j=0; j < positions1.length; j++) {
 	      if (snake1.equal(pos,positions1[j])) {
 	        $(el).addClass('has-snake1').removeClass('open');
-	      }
-	      else if (snake1.equal(pos, board.apple)) {
-	        $(el).addClass('apple').removeClass('open');
-	      }
-	    }
-	    for(var j=0; j < positions2.length; j++) {
-	      if (snake1.equal(pos,positions2[j])) {
-	        $(el).addClass('has-snake2').removeClass('open');
 	      }
 	      else if (snake1.equal(pos, board.apple)) {
 	        $(el).addClass('apple').removeClass('open');

@@ -56,7 +56,6 @@ var Board = function () {
     this.grid.push(new Array(25));
   }
   this.snake1 = new Snake();
-  this.snake2 = new Snake();
   this.apple = this.setApple();
 };
 Board.prototype.setApple = function () {
@@ -71,7 +70,7 @@ Board.prototype.setApple = function () {
 };
 
 Board.prototype.occupied = function (pos) {
-  segments = this.snake1.segments.concat(this.snake2.segments);
+  segments = this.snake1.segments;
   for (var i = 0; i < segments.length; i++) {
     if (this.snake1.equal(pos, segments[i])) {
       return true;
@@ -86,17 +85,11 @@ Board.prototype.checkApple = function () {
     this.snake1.score += 10;
     this.apple = this.setApple();
   }
-  if (this.snake2.equal(this.snake2.head, this.apple)) {
-    this.snake2.segments.push(this.snake2.lastPosition);
-    this.snake2.score += 10;
-    this.apple = this.setApple();
-  }
 };
 
 Board.prototype.checkSnake = function () {
-  var segments = this.snake1.segments.concat(this.snake2.segments);
+  var segments = this.snake1.segments;
   var head1 = this.snake1.head;
-  var head2 = this.snake2.head;
   var collide = true;
   for (var i = 0; i < segments.length; i++) {
     for (var j = i + 1; j < segments.length; j++) {
@@ -105,7 +98,7 @@ Board.prototype.checkSnake = function () {
       }
     }
   }
-  var bounds = (head1[0] >= 0 && head1[0] < 25 && head1[1] >= 0 && head1[1] < 25 && head2[0] >= 0 && head2[0] < 25 && head2[1] >= 0 && head2[1] < 25);
+  var bounds = (head1[0] >= 0 && head1[0] < 25 && head1[1] >= 0 && head1[1] < 25);
   return collide && bounds;
 };
 
